@@ -4,7 +4,25 @@ import { algorithms } from '../utils/algorithms';
 const ROWS = 20;
 const COLS = 40;
 
-export default function Grid({ algorithm, start, setStart, end, setEnd, triggerTraverse, setTriggerTraverse }) {
+export default function Grid({
+  algorithm,
+  start,
+  setStart,
+  end,
+  setEnd,
+  triggerTraverse,
+  setTriggerTraverse,
+  resetSignal, // ✅ New prop
+}: {
+  algorithm: string;
+  start: { row: number; col: number } | null;
+  setStart: (val: { row: number; col: number } | null) => void;
+  end: { row: number; col: number } | null;
+  setEnd: (val: { row: number; col: number } | null) => void;
+  triggerTraverse: boolean;
+  setTriggerTraverse: (val: boolean) => void;
+  resetSignal: boolean; // ✅ New prop
+}) {
   const [grid, setGrid] = useState(() =>
     Array.from({ length: ROWS }, () => Array(COLS).fill('empty'))
   );
@@ -40,6 +58,13 @@ export default function Grid({ algorithm, start, setStart, end, setEnd, triggerT
     setGrid(newGrid);
   };
 
+  // Effect for handling the grid reset
+  useEffect(() => {
+    const newGrid = Array.from({ length: ROWS }, () => Array(COLS).fill('empty'));
+    setGrid(newGrid);
+  }, [resetSignal]);  // Triggered when resetSignal changes
+
+  // Effect for running algorithm visualization
   useEffect(() => {
     if (triggerTraverse && start && end) {
       const cleanGrid = grid.map(r =>

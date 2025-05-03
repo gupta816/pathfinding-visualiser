@@ -7,6 +7,13 @@ export default function Home() {
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
   const [triggerTraverse, setTriggerTraverse] = useState(false);
+  const [resetSignal, setResetSignal] = useState(false); // ✅ New
+
+  const handleReset = () => {
+    setResetSignal(prev => !prev); // Toggle to notify Grid
+    setStart(null);
+    setEnd(null);
+  };
 
   return (
     <main className="min-h-screen text-white px-4 py-6 space-y-6 bg-gradient-to-r from-gray-800 via-gray-900 to-black">
@@ -14,7 +21,7 @@ export default function Home() {
       <p className="text-center text-lg text-gray-300 mb-4">
         Click to select <span className="text-blue-400 font-bold">Start</span>, then <span className="text-red-400 font-bold">End</span>, then add <span className="text-gray-200 font-bold">Obstacles</span>.
       </p>
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 flex-wrap">
         <select
           value={algorithm}
           onChange={(e) => setAlgorithm(e.target.value)}
@@ -30,6 +37,12 @@ export default function Home() {
         >
           Traverse
         </button>
+        <button
+          onClick={handleReset}
+          className="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded shadow-lg"
+        >
+          Reset Grid
+        </button>
       </div>
       <Grid
         algorithm={algorithm}
@@ -39,6 +52,7 @@ export default function Home() {
         setEnd={setEnd}
         triggerTraverse={triggerTraverse}
         setTriggerTraverse={setTriggerTraverse}
+        resetSignal={resetSignal} // ✅ New prop
       />
     </main>
   );
