@@ -77,16 +77,17 @@ export default function Grid({
   }, [triggerTraverse]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="mb-4">
-        <button
-          onClick={addRandomObstacles}
-          className="bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded shadow-lg"
-        >
-          Add Random Obstacles
-        </button>
-      </div>
-
+    <div className="flex flex-col items-center gap-4 w-full p-2">
+    <div className="mb-2 w-full flex justify-center">
+      <button
+        onClick={addRandomObstacles}
+        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded shadow-md text-sm sm:text-base"
+      >
+        Add Random Obstacles
+      </button>
+    </div>
+  
+    <div className="overflow-auto max-w-full">
       <div className="flex flex-col items-center gap-px">
         {grid.map((row, rIdx) => (
           <div key={rIdx} className="flex gap-px">
@@ -94,7 +95,7 @@ export default function Grid({
               <div
                 key={`${rIdx}-${cIdx}`}
                 onClick={() => handleClick(rIdx, cIdx)}
-                className={`w-5 h-5 transition duration-75 cursor-pointer ${
+                className={`aspect-square w-4 sm:w-5 md:w-6 cursor-pointer transition duration-75 ${
                   cell === 'start' ? 'bg-blue-500' :
                   cell === 'end' ? 'bg-red-500' :
                   cell === 'obstacle' ? 'bg-black' :
@@ -108,5 +109,7 @@ export default function Grid({
         ))}
       </div>
     </div>
+  </div>
+  
   );
 }
